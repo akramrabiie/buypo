@@ -1,0 +1,22 @@
+.md-field.md-has-password .md-toggle-password{
+    left:0!important;
+    right:auto;
+}
+.md-field label{
+    right:0;
+    left:auto;
+}
+
+.md-field .md-input[type=password]{
+    padding-left: 30px;
+}
+
+p{
+    text-align: right;
+}
+.md-list-item-content>.md-icon:first-child{
+    margin-right: 0;
+}
+.md-drawer{
+    width: 250px!important;
+}
