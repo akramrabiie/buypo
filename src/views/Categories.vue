@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+   <appContainer :page="'categories'">
+    <h1>This is categries page  page</h1>
+  </appContainer>
 </template>

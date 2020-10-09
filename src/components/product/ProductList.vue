@@ -12,7 +12,6 @@
       <Product />
       <md-divider class="md-inset"></md-divider>
       <Product />
-      <md-divider class="md-inset"></md-divider>
     </md-list>
   </div>
 </template>
@@ -20,10 +19,11 @@
 <script>
 import Product from './Product'
 export default {
-  name: 'Prductist',
+  name: 'ProductList',
   components:{
       Product
-  }
+  },
+  props:['products']
 }
 </script>
 
