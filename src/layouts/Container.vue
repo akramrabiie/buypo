@@ -6,9 +6,9 @@
           <md-icon>menu</md-icon>
         </md-button>
         <span class="md-title">BuyPo</span>
-        <div class="md-toolbar-section-end">
+        <div class="md-toolbar-section-end" >
           خروج
-          <md-button class="md-icon-button" to="/login">
+          <md-button class="md-icon-button" @click="logout" >
             <md-icon>logout</md-icon>
           </md-button>
         </div>
@@ -78,14 +78,19 @@
 }
 </style>
 <script>
+import store from '../Store';
 export default {
   name: "appContainer",
   data: () => ({
     menuVisible: false
   }),
   methods: {
-    toggleMenu() {
+    toggleMenu: () => {
       this.menuVisible = !this.menuVisible;
+    },
+    logout(){
+      store.removeToken();
+       this.$router.push('login')
     }
   }
 };

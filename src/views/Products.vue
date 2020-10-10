@@ -4,7 +4,7 @@
       <h1>محصولات</h1>
       <md-button class="md-raised md-primary">ایجاد محصول جدید<md-icon>add</md-icon></md-button>
     </div>
-    <ProductList :products="products" />
+    <ProductList :products="products" @removeItem="removeItem" />
   </appContainer>
 </template>
 
@@ -37,9 +37,11 @@ export default {
   },
   methods:{
     removeItem(id){
-      debugger;
-      api.removeItem('product', id).then(res=>{
-        console.log(res);
+      api.removeForId('Product', id).then(res=>{
+       alert(res);
+      },
+      err=>{
+        console.log(err)
       })
     }
   }
