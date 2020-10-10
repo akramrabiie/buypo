@@ -2,7 +2,7 @@
   <appContainer >
     <div class="md-layout">
       <h1>محصولات</h1>
-      <md-button class="md-raised md-primary">ایجاد محصول جدید</md-button>
+      <md-button class="md-raised md-primary">ایجاد محصول جدید<md-icon>add</md-icon></md-button>
     </div>
     <ProductList :products="products" />
   </appContainer>
@@ -29,11 +29,19 @@ export default {
   },
   created(){
     let page = 1;
-   api.getAllProducts(page).then(res=>{
+   api.getList('Product', page).then(res=>{
      this.products = res.data;
    }, err=>{
      console.log(err)
    })
+  },
+  methods:{
+    removeItem(id){
+      debugger;
+      api.removeItem('product', id).then(res=>{
+        console.log(res);
+      })
+    }
   }
  
 };

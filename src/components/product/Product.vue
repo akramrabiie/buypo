@@ -12,7 +12,7 @@
     <md-button class="md-icon-button md-list-action">
       <md-icon class="md-primary">remove_red_eye</md-icon>
     </md-button>
-    <md-button class="md-icon-button md-list-action">
+    <md-button class="md-icon-button md-list-action" @click="$emit('remove',product.id)">
       <md-icon class="md-primary">delete</md-icon>
     </md-button>
   </md-list-item>

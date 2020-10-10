@@ -3,7 +3,7 @@
     <md-list class="md-layout-item md-size-80">
       <div v-for="p in products"  :key="p.id"> 
         <md-list-item class="md-layout-item">
-          <Product :product="p" />
+          <Product :product="p" @remove="$emit('removeItem')" />
         </md-list-item>
         <md-divider class="md-inset"></md-divider>
       </div>

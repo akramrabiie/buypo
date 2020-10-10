@@ -6,8 +6,13 @@ const SERVER_URL = "http://buypo.idco.xyz/api/";
 
 const instance = axios.create({
   baseURL: SERVER_URL,
-  timeout: 5000,
+  timeout: 10000,
 });
+
+const RESOURCE_TYPE = {
+  Product: "products",
+  Category: "categories",
+};
 
 export default {
   async execute(method, resource, data, config) {
@@ -21,27 +26,12 @@ export default {
     if (resource !== "authentication_token") {
       request.headers = {
         "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization": "Bearer " + store.getToken(),
+        Accept: "application/json",
+        Authorization: "Bearer " + store.getToken(),
       };
     }
 
-    
     return instance(request);
-  },
-
-  createNew(text, completed) {
-    return this.execute("POST", "todos", { title: text, completed: completed });
-  },
-
-  getAllProducts(page) {
-    return this.execute("GET", "products?page=" + page, null, {
-      transformResponse: [
-        function(data) {
-          return  JSON.parse(data);
-        },
-      ],
-    });
   },
   login({ username, password }) {
     return this.execute("POST", "authentication_token", {
@@ -50,6 +40,22 @@ export default {
     });
   },
 
+  createNew(text, completed) {
+    return this.execute("POST", "todos", { title: text, completed: completed });
+  },
+
+  getList(resourceType, page) {
+    let resType = RESOURCE_TYPE[resourceType];
+    return this.execute("GET", resType + "?page=" + page);
+  },
+  getOne(resourceType) {
+    let resType = RESOURCE_TYPE[resourceType];
+    return this.execute("GET", resType);
+  },
+  removeForId( resourceType,id) {
+    let resType = RESOURCE_TYPE[resourceType];
+    return this.execute("DELETE", resType +  "/" + id);
+  },
   updateForId(id, text, completed) {
     return this.execute("PUT", "todos/" + id, {
       title: text,
@@ -57,7 +63,5 @@ export default {
     });
   },
 
-  removeForId(id) {
-    return this.execute("DELETE", "todos/" + id);
-  },
+  
 };
