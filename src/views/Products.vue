@@ -5,7 +5,7 @@
       <md-button class="md-raised md-primary" to="/products/new">ایجاد محصول جدید<md-icon>add</md-icon></md-button>
     </div>
      <md-progress-spinner v-if="!products.length" class="md-primary" md-mode="indeterminate" :md-diameter="30" :md-stroke="3"></md-progress-spinner>
-    <ProductList :products="products" v-if="products" @removeitem="removeItem" />
+    <ProductList :products="products" v-if="products.length" @removeitem="removeItem" />
   </appContainer>
 </template>
 
