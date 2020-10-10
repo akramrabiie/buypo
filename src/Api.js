@@ -40,8 +40,15 @@ export default {
     });
   },
 
-  createNew(text, completed) {
-    return this.execute("POST", "todos", { title: text, completed: completed });
+  createNew(resourceType, data) {
+    let resType = RESOURCE_TYPE[resourceType];
+    if(resType == RESOURCE_TYPE.Category){
+      return this.execute("POST", resType, data);
+    }
+    else if(RESOURCE_TYPE.Product){
+      return this.execute("POST", resType, data);
+    }
+    
   },
 
   getList(resourceType, page) {

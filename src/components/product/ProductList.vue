@@ -1,7 +1,7 @@
 <template>
   <div class="md-layout">
     <md-list class="md-layout-item md-size-80">
-      <div v-for="p in products"  :key="p.id"> 
+      <div v-for="p in products" :key="p.id"> 
         <md-list-item class="md-layout-item">
           <Product :product="p" @remove="$emit('removeitem', $event)" />
         </md-list-item>
