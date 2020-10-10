@@ -21,23 +21,23 @@
         </md-toolbar>
 
         <md-list>
-          <md-list-item to="/components/list">
+          <md-list-item to="/live-orders">
             <md-icon>move_to_inbox</md-icon>
             <span class="md-list-item-text">مشاهده لحظه ای سفارش ها</span>
           </md-list-item>
 
-          <md-list-item to="/components/list">
-            <md-icon>send</md-icon>
+          <md-list-item to="/categories">
+            <md-icon>list</md-icon>
             <span class="md-list-item-text">دسته بندی ها</span>
           </md-list-item>
 
-          <md-list-item to="/components/list">
-            <md-icon>delete</md-icon>
-            <span class="md-list-item-text">محصولات</span>
+          <md-list-item to="/products">
+            <md-icon>fastfood</md-icon>
+            <span class="md-list-item-text" >محصولات</span>
           </md-list-item>
 
-          <md-list-item to="/components/list">
-            <md-icon>error</md-icon>
+          <md-list-item to="/orders">
+            <md-icon>receipt_long</md-icon>
             <span class="md-list-item-text">سفارش ها</span>
           </md-list-item>
         </md-list>
@@ -67,6 +67,9 @@
     display: block;
   }
 }
+.md-list-item-text{
+  margin-right:10px;
+}
 .md-app {
   height: 100vh;
   border: 1px solid rgba(#000, 0.12);
@@ -90,7 +93,7 @@ export default {
     },
     logout(){
       store.removeToken();
-       this.$router.push('login')
+       this.$router.push('/login')
     }
   }
 };

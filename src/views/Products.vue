@@ -2,9 +2,10 @@
   <appContainer >
     <div class="md-layout">
       <h1>محصولات</h1>
-      <md-button class="md-raised md-primary">ایجاد محصول جدید<md-icon>add</md-icon></md-button>
+      <md-button class="md-raised md-primary" to="/products/new">ایجاد محصول جدید<md-icon>add</md-icon></md-button>
     </div>
-    <ProductList :products="products" @removeItem="removeItem" />
+     <md-progress-spinner v-if="!products.length" class="md-primary" md-mode="indeterminate" :md-diameter="30" :md-stroke="3"></md-progress-spinner>
+    <ProductList :products="products" v-if="products" @removeitem="removeItem" />
   </appContainer>
 </template>
 

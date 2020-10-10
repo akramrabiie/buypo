@@ -45,6 +45,7 @@ export default {
   },
 
   getList(resourceType, page) {
+    page = page || 1;
     let resType = RESOURCE_TYPE[resourceType];
     return this.execute("GET", resType + "?page=" + page);
   },

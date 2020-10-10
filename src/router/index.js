@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Products from '../views/Products.vue'
+import LiveOrders from '../views/LiveOrders.vue'
+import Orders from '../views/Orders.vue'
 import EditProduct from '../views/EditProduct.vue'
 import Login from '../views/Login.vue'
 
@@ -18,13 +20,23 @@ const routes = [
     component: Login
   },
   {
+    path: '/live-orders',
+    name: 'Live Ordes',
+    component: LiveOrders
+  },
+  {
+    path: '/orders',
+    name: 'Orders',
+    component: Orders
+  },
+  {
     path: '/products/new',
     name: 'products',
     component: EditProduct
   },
   {
-    path: '/about',
-    name: 'About',
+    path: '/categories',
+    name: 'categories',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
