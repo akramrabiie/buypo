@@ -2,7 +2,7 @@
   <div class="centered-container">
     <md-content class="md-elevation-3">
       <div class="title">
-        <img src="https://vuematerial.io/assets/logo-color.png" />
+        <!-- <img src="https://vuematerial.io/assets/logo-color.png" /> -->
         <div class="md-title">BuyPo</div>
         <div class="md-body-1"></div>
       </div>
@@ -10,7 +10,7 @@
       <div class="form">
         <md-field>
           <label>شماره کسب و کار</label>
-          <md-input v-model="login.email" autofocus></md-input>
+          <md-input v-model="login.username" autofocus></md-input>
         </md-field>
 
         <md-field md-has-password>
@@ -33,13 +33,15 @@
 </template>
 
 <script>
+import api from '../Api';
+import store from '../Store';
 export default {
   name: "Login",
   data() {
     return {
       loading: false,
       login: {
-        email: "",
+        username: "",
         password: ""
       }
     };
@@ -47,11 +49,19 @@ export default {
   methods: {
     auth() {
       this.loading = true;
+      
+      let username = this.login.username;
+      let password= this.login.password;
 
-      setTimeout(() => {
-        this.loading = false;
+      api.login({username, password}).then(res=>{
         this.$router.push({ path: "products" });
-      }, 3000);
+        this.loading = false;
+        store.setToken(res.data.token);
+      }, err=>{
+          alert(err);
+          this.loading = false;
+      });
+
     }
   }
 };

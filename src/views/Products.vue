@@ -15,6 +15,7 @@
 import appContainer from '@/layouts/Container.vue'
 
 import ProductList from "../components/product/ProductList";
+import api from '../Api';
 export default {
   name: "Products",
   components: {
@@ -23,23 +24,16 @@ export default {
   },
   data(){
     return {
-      products:[{
-        title:'فورمه سبزی'
-      },
-      {
-        title:'فورمه سبزی'
-      },
-      {
-        title:'فورمه سبزی'
-      },
-      {
-        title:'فورمه سبزی'
-      },
-      {
-        title:'فورمه سبزی'
-      },
-      ]
+      products:[]
     }
+  },
+  created(){
+    let page = 1;
+   api.getAllProducts(page).then(res=>{
+     this.products = res.data;
+   }, err=>{
+     console.log(err)
+   })
   }
  
 };

@@ -1,10 +1,10 @@
 <template>
   <md-list-item class="md-layout-item">
     <md-avatar>
-      <img src="https://placeimg.com/40/40/people/1" alt="People" />
+      <img :src="'https://buypo.idco.xyz/'+product.image" alt="People" />
     </md-avatar>
 
-    <div class="md-list-item-text">قورمه سبزی</div>
+    <div class="md-list-item-text">{{product.name}}</div>
 
     <md-button class="md-icon-button md-list-action">
       <md-icon class="md-primary">edit</md-icon>
@@ -19,6 +19,7 @@
 </template>
 <script>
 export default {
-  name: "Product"
+  name: "Product",
+  props: ["product"]
 };
 </script>
