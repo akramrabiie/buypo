@@ -6,8 +6,8 @@
 
     <div class="md-list-item-text">{{ product.name }}</div>
 
-    <md-button class="md-icon-button md-list-action">
-      <md-icon class="md-primary">edit</md-icon>
+    <md-button class="md-icon-button md-list-action" :to="'/products/new/'+ product.id">
+      <md-icon class="md-primary" >edit</md-icon>
     </md-button>
     <md-button class="md-icon-button md-list-action">
       <md-icon class="md-primary">remove_red_eye</md-icon>
@@ -16,7 +16,7 @@
       class="md-icon-button md-list-action"
       @click="$emit('remove', product.id)"
     >
-      <md-icon class="md-primary">delete</md-icon>
+      <md-icon class="md-primary" >delete</md-icon>
     </md-button>
   </md-list-item>
 </template>

@@ -1,6 +1,5 @@
 <template>
   <appContainer>
-
     <div>
       <ProductDetails :categories="categories"/>
     </div>

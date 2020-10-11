@@ -6,6 +6,7 @@
     @submit="saveProduct"
   >
     <md-card class="md-layout-item md-size-70 md-small-size-100">
+      
       <md-card-header> ایجاد/ویرایش محصول </md-card-header>
 
       <md-card-content>
@@ -75,6 +76,9 @@
                 v-model="form.content"
                 :disabled="sending"
               />
+               <span class="md-error" v-if="!$v.form.content.minLength"
+                >تعداد کارکتر توضیحات باید بیشتر از 4 کارکتر باشد.</span
+              >
             </md-field>
             <md-field :class="getValidationClass('desc')">
               <label for="desc">توضیحات</label>
@@ -87,6 +91,7 @@
                 :disabled="sending"
               >
               </md-textarea>
+              
             </md-field>
             <md-field :class="getValidationClass('remain')">
               <label for="remain">موجودی</label>
@@ -116,13 +121,13 @@
           <div class="md-layout-item md-small-size-100">
             <md-card class="image-box">
               <img
-                v-if="selectedImage"
+                v-if="!selectedImage"
                 src="../../assets/food_default.png"
                 style="width:100%; height:100%"
               />
               <img
-                v-else
-                :src="selectedImage"
+                v-if="selectedImage"
+                :src="'https://buypo.idco.xyz/' + selectedImage"
                 style="width:100%; height:100%"
               />
               <div class="change-image-cover" @click="$refs.fileInput.click()">
@@ -170,21 +175,40 @@
 
 <script>
 import { validationMixin } from "vuelidate";
-import { required, minLength, maxLength } from "vuelidate/lib/validators";
+import { required, minLength } from "vuelidate/lib/validators";
 import Api from "../../Api";
 
 export default {
   name: "ProductDetails",
   mixins: [validationMixin],
   props: ["categories"],
+  created(){
+    if(this.$route.params.id){
+      Api.getOne('Product',this.$route.params.id).then(data=>{
+        const product = data.data;
+
+        this.form = {
+          name :product.name,
+          category :product.category.id,
+          desc : product.desc_long,
+          price: product.price,
+          remain : product.remain,
+          content : product.desc_short,
+          active: product.status? true : false
+        };
+        this.selectedImage = product.image;
+
+      });
+    }
+  },
   data: () => ({
     form: {
-      name: null,
-      category: null,
-      price: null,
-      age: null,
-      desc: null,
-      remain: null,
+      name: 'تست غذا '  + parseInt(Math.random()*100),
+      category: 42,
+      price: 200,
+      desc: 'لورم ایپسوم تست برای توضیحات محصول',
+      content: 'لورم ایپسوم تست برای محتویات',
+      remain: 1,
       active: null,
     },
     itemSaved: false,
@@ -203,14 +227,14 @@ export default {
       },
       content: {
         required,
-        maxLength: maxLength(3),
+        minLength: minLength(4),
       },
       price: {
         required,
       },
       desc: {},
       active: {},
-      remain: {},
+      remain: { },
     },
   },
   methods: {
@@ -233,20 +257,25 @@ export default {
       this.form.content = null;
       this.form.price = null;
       this.form.desc = null;
-      this.form.remain = null;
+      this.form.remain = 1;
       this.form.active = null;
     },
     saveProduct() {
       this.sending = true;
 
-     
       let formData = new FormData();
-      let file = document.getElementById("imageFile");
+      let fileElem = document.getElementById("imageFile");
+      let file = fileElem.files[0];
+
       formData.append("file", file);
-  
+
       Api.saveImage(formData).then(
         (data) => {
+          debugger;
           console.log(data);
+          debugger;
+          let image = data.data.url;
+          this.selectedImage = image;
           this.finalSave();
         },
         () => {
@@ -255,17 +284,16 @@ export default {
       );
     },
     finalSave() {
-       const data = {
+      const data = {
         name: this.form.name,
         price: parseInt(this.form.price),
         desc_short: this.form.content,
         desc_long: this.form.desc,
         remain: parseInt(this.form.remain),
         status: this.form.active ? 1 : 0,
-        image: "image.jpg",
+        image: this.selectedImage,
         category: "api/categories/" + this.form.category,
       };
-
 
       Api.createNew("Product", data).then(
         (data) => {

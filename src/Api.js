@@ -93,11 +93,11 @@ export default {
   getList(resourceType, page) {
     page = page || 1;
     let resType = RESOURCE_TYPE[resourceType];
-    return this.execute("GET", resType + "?page=" + page);
+    return this.execute("GET", resType + "?page=" + page+"&sort=-cdt");
   },
-  getOne(resourceType) {
+  getOne(resourceType, id) {
     let resType = RESOURCE_TYPE[resourceType];
-    return this.execute("GET", resType);
+    return this.execute("GET", resType+'/'+id);
   },
   removeForId(resourceType, id) {
     let resType = RESOURCE_TYPE[resourceType];
@@ -112,6 +112,9 @@ export default {
 
   saveImage(imageData){
     return this.execute('POST', 'images', imageData)
+  },
+  getImageUrl(id){
+    return this.execute('GET', 'images/'+id);
   }
 
 };

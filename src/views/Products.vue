@@ -1,26 +1,39 @@
 <template>
   <appContainer>
     <div class="md-layout">
-      <h1>محصولات</h1>
-      <md-button class="md-raised md-primary" to="/products/new"
-        >ایجاد محصول جدید<md-icon>add</md-icon></md-button
-      >
+      <!-- <div class="md-layout-item md-size-0"></div> -->
+      <md-button class="md-raised md-primary " to="/products/new"
+            >ایجاد محصول جدید<md-icon>add</md-icon></md-button
+          >
+          <br />
+          <br />
     </div>
-    <md-progress-spinner
-      v-if="loading"
-      class="md-primary"
-      md-mode="indeterminate"
-      :md-diameter="30"
-      :md-stroke="3"
-    ></md-progress-spinner>
-    <ProductList
-      :products="products"
-      v-if="!loading"
-      @removeitem="removeItem"
-    />
-    <md-snackbar style="margin-bottom: 20px;" :md-active.sync="requestEnded">
-      {{ msg }}</md-snackbar
-    >
+    
+    <md-card class="md-layout-item md-size-70 md-small-size-100">
+      <md-card-header>
+        <div class="md-layout">
+          محصولات
+          <h1 class="md-layout-item md-size-75"></h1>
+          
+        </div>
+      </md-card-header>
+
+      <md-progress-spinner
+        v-if="loading"
+        class="md-primary"
+        md-mode="indeterminate"
+        :md-diameter="30"
+        :md-stroke="3"
+      ></md-progress-spinner>
+      <ProductList
+        :products="products"
+        v-if="!loading"
+        @removeitem="removeItem"
+      />
+      <md-snackbar style="margin-bottom: 20px;" :md-active.sync="requestEnded">
+        {{ msg }}</md-snackbar
+      >
+    </md-card>
   </appContainer>
 </template>
 
@@ -54,7 +67,6 @@ export default {
       },
       () => {
         this.loading = false;
-        
       }
     );
   },

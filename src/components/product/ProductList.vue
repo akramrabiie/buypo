@@ -1,6 +1,6 @@
 <template>
   <div class="md-layout">
-    <md-list class="md-layout-item md-size-60">
+    <md-list class="md-layout-item md-size-100">
       <div v-for="p in products" :key="p.id"> 
         <md-list-item class="md-layout-item">
           <Product :product="p" @remove="$emit('removeitem', $event)" />
@@ -8,7 +8,7 @@
         <md-divider class="md-inset"></md-divider>
       </div>
     </md-list>
-   
+  
   </div>
 </template>
 
