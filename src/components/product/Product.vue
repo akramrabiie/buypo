@@ -40,7 +40,7 @@ export default {
       this.editPressed = true;
       setTimeout(() => {
         this.editPressed = false;
-      }, 200);
+      }, 5000);
     },
   },
 };
