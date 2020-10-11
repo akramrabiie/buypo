@@ -239,7 +239,23 @@ export default {
     saveProduct() {
       this.sending = true;
 
-      const data = {
+     
+      let formData = new FormData();
+      let file = document.getElementById("imageFile");
+      formData.append("file", file);
+  
+      Api.saveImage(formData).then(
+        (data) => {
+          console.log(data);
+          this.finalSave();
+        },
+        () => {
+          this.finalSave();
+        }
+      );
+    },
+    finalSave() {
+       const data = {
         name: this.form.name,
         price: parseInt(this.form.price),
         desc_short: this.form.content,
@@ -250,21 +266,7 @@ export default {
         category: "api/categories/" + this.form.category,
       };
 
-      let formData = new FormData();
-      let file = document.getElementById("imageFile");
-      formData.append("file", file);
-      debugger;
-      Api.saveImage(formData).then(
-        (data) => {
-          console.log(data);
-          this.saveProduct();
-        },
-        () => {
-          this.saveProduct();
-        }
-      );
-    },
-    saveProduct() {
+
       Api.createNew("Product", data).then(
         (data) => {
           this.submitMsg = `محصول ${data.data.name} با موفقیت ثبت شد :)`;
