@@ -20,3 +20,25 @@ p{
 .md-drawer{
     width: 250px!important;
 }
+.md-checkbox .md-checkbox-label{
+    padding-right:16px;
+    padding-left: 0;
+}
+.md-checkbox{
+    margin: 16px 0 16px 16px ;
+}
+.md-field.md-has-textarea:not(.md-autogrow) label{
+    left:auto;
+    right:16px;
+
+}
+.md-app .md-content.md-theme-default{
+    background: #f7f7f7;
+}
+.md-card-header{
+    font-size: 20px;
+}
+.md-card.md-theme-default{
+    margin: 0;
+    padding:16px ;
+}

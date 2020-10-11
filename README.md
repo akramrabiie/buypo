@@ -24,6 +24,10 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Future works
-- Define a main layout for pages such as page title and so on
-- define a global theme 
-- using http only cookie for store the token data for increase security
+- Defining a main layout for pages such as page title and so on
+- Defining a global theme 
+- Using http only cookie for store the token data for increase security
+- General notification service
+- General messages const/enum
+- Type checking: I mean use models/view models for recieved/sent data from api and all the data we are using in ui
+- Typography

@@ -18,6 +18,9 @@
       v-if="!loading"
       @removeitem="removeItem"
     />
+    <md-snackbar style="margin-bottom: 20px;" :md-active.sync="requestEnded">
+      {{ msg }}</md-snackbar
+    >
   </appContainer>
 </template>
 
@@ -37,6 +40,8 @@ export default {
     return {
       products: [],
       loading: false,
+      requestEnded: false,
+      msg: "",
     };
   },
   created() {
@@ -47,20 +52,25 @@ export default {
         this.loading = false;
         this.products = res.data;
       },
-      (err) => {
+      () => {
         this.loading = false;
-        console.log(err);
+        
       }
     );
   },
   methods: {
     removeItem(id) {
       api.removeForId("Product", id).then(
-        (res) => {
-          alert(res);
+        () => {
+          this.msg = "محصول مورد نظر حذف شد :)";
+          this.requestEnded = true;
         },
-        (err) => {
-          console.log(err);
+        () => {
+          this.msg = "خطایی رخ داده است :(";
+          this.requestEnded = true;
+          setTimeout(() => {
+            this.requestEnded = false;
+          }, 2000);
         }
       );
     },

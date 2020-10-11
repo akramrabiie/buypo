@@ -59,7 +59,6 @@ export default {
       url: resource,
       data,
       ...config,
-
     };
 
     if (resource !== "authentication_token") {

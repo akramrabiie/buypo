@@ -1,8 +1,6 @@
 <template>
   <appContainer>
-    <div class="md-layout">
-      <h2>ایجاد/ویرایش محصول جدید</h2>
-    </div>
+
     <div>
       <ProductDetails :categories="categories"/>
     </div>
