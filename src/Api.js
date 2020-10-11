@@ -110,5 +110,8 @@ export default {
     });
   },
 
+  saveImage(imageData){
+    return this.execute('POST', 'images', imageData)
+  }
 
 };

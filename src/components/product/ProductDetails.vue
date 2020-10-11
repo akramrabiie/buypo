@@ -115,7 +115,16 @@
 
           <div class="md-layout-item md-small-size-100">
             <md-card class="image-box">
-              <img :src="getImageUrl" style="width:100%; height:100%" />
+              <img
+                v-if="selectedImage"
+                src="../../assets/food_default.png"
+                style="width:100%; height:100%"
+              />
+              <img
+                v-else
+                :src="selectedImage"
+                style="width:100%; height:100%"
+              />
               <div class="change-image-cover" @click="$refs.fileInput.click()">
                 <md-button
                   type="button"
@@ -241,9 +250,21 @@ export default {
         category: "api/categories/" + this.form.category,
       };
 
-
-     
-
+      let formData = new FormData();
+      let file = document.getElementById("imageFile");
+      formData.append("file", file);
+      debugger;
+      Api.saveImage(formData).then(
+        (data) => {
+          console.log(data);
+          this.saveProduct();
+        },
+        () => {
+          this.saveProduct();
+        }
+      );
+    },
+    saveProduct() {
       Api.createNew("Product", data).then(
         (data) => {
           this.submitMsg = `محصول ${data.data.name} با موفقیت ثبت شد :)`;
