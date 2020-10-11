@@ -2,7 +2,7 @@
   <appContainer>
     <div class="md-layout">
       <!-- <div class="md-layout-item md-size-0"></div> -->
-      <md-button class="md-raised md-primary " to="/products/new"
+      <md-button class="md-raised md-primary " to="/products/new-product"
             >ایجاد محصول جدید<md-icon>add</md-icon></md-button
           >
           <br />

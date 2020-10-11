@@ -42,7 +42,7 @@ export default {
   created() {
     let page = 1;
     this.loading = true;
-    api.getList("Product", page).then(
+    api.getList("Category", page).then(
       (res) => {
         this.loading = false;
         this.products = res.data;

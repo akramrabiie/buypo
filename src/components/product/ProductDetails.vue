@@ -6,8 +6,7 @@
     @submit="saveProduct"
   >
     <md-card class="md-layout-item md-size-70 md-small-size-100">
-      
-      <md-card-header> ایجاد/ویرایش محصول </md-card-header>
+      <md-card-header>{{ productActionText }} محصول </md-card-header>
 
       <md-card-content>
         <div class="md-layout md-gutter">
@@ -76,7 +75,7 @@
                 v-model="form.content"
                 :disabled="sending"
               />
-               <span class="md-error" v-if="!$v.form.content.minLength"
+              <span class="md-error" v-if="!$v.form.content.minLength"
                 >تعداد کارکتر توضیحات باید بیشتر از 4 کارکتر باشد.</span
               >
             </md-field>
@@ -91,7 +90,6 @@
                 :disabled="sending"
               >
               </md-textarea>
-              
             </md-field>
             <md-field :class="getValidationClass('remain')">
               <label for="remain">موجودی</label>
@@ -162,7 +160,7 @@
           type="submit"
           class="md-raised md-primary"
           :disabled="sending"
-          >ایجاد محصول</md-button
+          >ثبت اطلاعات</md-button
         >
       </md-card-actions>
     </md-card>
@@ -182,32 +180,36 @@ export default {
   name: "ProductDetails",
   mixins: [validationMixin],
   props: ["categories"],
-  created(){
-    if(this.$route.params.id){
-      Api.getOne('Product',this.$route.params.id).then(data=>{
+  created() {
+    this.productActionText = "ایجاد";
+    if (this.$route.params.id) {
+      this.productActionText = "ویرایش";
+      this.productId = this.$route.params.id;
+
+      Api.getOne("Product", this.productId).then((data) => {
         const product = data.data;
 
         this.form = {
-          name :product.name,
-          category :product.category.id,
-          desc : product.desc_long,
+          name: product.name,
+          category: product.category.id,
+          desc: product.desc_long,
           price: product.price,
-          remain : product.remain,
-          content : product.desc_short,
-          active: product.status? true : false
+          remain: product.remain,
+          content: product.desc_short,
+          active: product.status ? true : false,
         };
         this.selectedImage = product.image;
-
       });
     }
   },
   data: () => ({
+    productActionText: "",
     form: {
-      name: 'تست غذا '  + parseInt(Math.random()*100),
+      name: "تست غذا " + parseInt(Math.random() * 100),
       category: 42,
       price: 200,
-      desc: 'لورم ایپسوم تست برای توضیحات محصول',
-      content: 'لورم ایپسوم تست برای محتویات',
+      desc: "لورم ایپسوم تست برای توضیحات محصول",
+      content: "لورم ایپسوم تست برای محتویات",
       remain: 1,
       active: null,
     },
@@ -234,7 +236,7 @@ export default {
       },
       desc: {},
       active: {},
-      remain: { },
+      remain: {},
     },
   },
   methods: {
@@ -267,21 +269,25 @@ export default {
       let fileElem = document.getElementById("imageFile");
       let file = fileElem.files[0];
 
-      formData.append("file", file);
+      if (file) {
+        formData.append("file", file);
 
-      Api.saveImage(formData).then(
-        (data) => {
-          debugger;
-          console.log(data);
-          debugger;
-          let image = data.data.url;
-          this.selectedImage = image;
-          this.finalSave();
-        },
-        () => {
-          this.finalSave();
-        }
-      );
+        Api.saveImage(formData).then(
+          (data) => {
+            debugger;
+            console.log(data);
+            debugger;
+            let image = data.data.url;
+            this.selectedImage = image;
+            this.finalSave();
+          },
+          () => {
+            this.finalSave();
+          }
+        );
+      }else {
+        this.finalSave();
+      }
     },
     finalSave() {
       const data = {
@@ -295,19 +301,35 @@ export default {
         category: "api/categories/" + this.form.category,
       };
 
-      Api.createNew("Product", data).then(
-        (data) => {
-          this.submitMsg = `محصول ${data.data.name} با موفقیت ثبت شد :)`;
-          this.itemSaved = true;
-          this.sending = false;
-          // this.clearForm();
-        },
-        () => {
-          this.sending = false;
-          this.submitMsg = `خطایی رخ داده است.`;
-          this.itemSaved = true;
-        }
-      );
+      if (this.productId) {
+        Api.updateForId("Product", this.productId, data).then(
+          (data) => {
+            this.submitMsg = `محصول ${data.data.name} با موفقیت ثبت شد :)`;
+            this.itemSaved = true;
+            this.sending = false;
+            // this.clearForm();
+          },
+          () => {
+            this.sending = false;
+            this.submitMsg = `خطایی رخ داده است.`;
+            this.itemSaved = true;
+          }
+        );
+      } else {
+        Api.createNew("Product", data).then(
+          (data) => {
+            this.submitMsg = `محصول ${data.data.name} با موفقیت ثبت شد :)`;
+            this.itemSaved = true;
+            this.sending = false;
+            // this.clearForm();
+          },
+          () => {
+            this.sending = false;
+            this.submitMsg = `خطایی رخ داده است.`;
+            this.itemSaved = true;
+          }
+        );
+      }
     },
     validateData() {
       //this.$v.$touch();
@@ -321,7 +343,6 @@ export default {
     },
     readImageURL(input) {
       if (input.files && input.files[0]) {
-        debugger;
         var reader = new FileReader();
 
         reader.onload = function(e) {

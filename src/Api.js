@@ -68,6 +68,9 @@ export default {
         Authorization: "Bearer " + TokenStorage.getToken(),
       };
     }
+    if(method == 'PATCH'){
+      request.headers['Content-Type'] = 'application/merge-patch+json';
+    }
 
     let req = instance(request);
 
@@ -103,11 +106,10 @@ export default {
     let resType = RESOURCE_TYPE[resourceType];
     return this.execute("DELETE", resType + "/" + id);
   },
-  updateForId(id, text, completed) {
-    return this.execute("PUT", "todos/" + id, {
-      title: text,
-      completed: completed,
-    });
+  updateForId(resourceType, id, data) {
+    let resType = RESOURCE_TYPE[resourceType];
+    debugger;
+    return this.execute("PATCH", resType+"/" + id, data);
   },
 
   saveImage(imageData){

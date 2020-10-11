@@ -31,3 +31,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - General messages const/enum
 - Type checking: I mean use models/view models for recieved/sent data from api and all the data we are using in ui
 - Typography
+- Remove all the hardcodes! (like 'api/categorie/' for category field in product cud)
+- Pagination
+- Virtual scrolling for the lists to enhance the performance
+
+
+
