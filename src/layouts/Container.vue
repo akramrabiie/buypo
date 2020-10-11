@@ -81,7 +81,7 @@
 }
 </style>
 <script>
-import store from '../Store';
+import TokenStorage from '../TokenStorage';
 export default {
   name: "appContainer",
   data: () => ({
@@ -92,7 +92,7 @@ export default {
       this.menuVisible = !this.menuVisible;
     },
     logout(){
-      store.removeToken();
+      TokenStorage.removeToken();
        this.$router.push('/login')
     }
   }

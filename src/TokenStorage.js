@@ -1,6 +1,6 @@
 const USER_TOKEN = 'USER_TOKEN';
 export default{
-    name :"store",
+    name :"TokenStorage",
     setToken: (token)=>{
         localStorage.setItem(USER_TOKEN, token);
     },

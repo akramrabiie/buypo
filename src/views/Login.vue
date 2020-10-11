@@ -34,7 +34,7 @@
 
 <script>
 import api from '../Api';
-import store from '../Store';
+import TokenStorage from '../TokenStorage';
 export default {
   name: "Login",
   data() {
@@ -56,7 +56,7 @@ export default {
       api.login({username, password}).then(res=>{
         this.$router.push({ path: "products" });
         this.loading = false;
-        store.setToken(res.data.token);
+        TokenStorage.setToken(res.data.token);
       }, err=>{
           alert(err);
           this.loading = false;
